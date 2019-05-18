@@ -34,6 +34,18 @@ void CP_ResizeConsoleWindow(HANDLE console, CP_Uint width, CP_Uint height) {
 	rect.Right = coord.X - 1;
 	rect.Bottom = coord.Y - 1;
 
+	CONSOLE_FONT_INFOEX cfi;
+		cfi.cbSize = sizeof(cfi);
+		cfi.nFont = 0;
+		cfi.dwFontSize.X = 4;
+		cfi.dwFontSize.Y = 8;
+		cfi.FontFamily = FF_DONTCARE;
+		cfi.FontWeight = FW_NORMAL;
+
+	wcscpy_s(cfi.FaceName, 32, L"Consolas");
+	if (!SetCurrentConsoleFontEx(console, 0, &cfi))
+		abort();
+
 	SetConsoleWindowInfo(console, 0, &rect);
 }
 
